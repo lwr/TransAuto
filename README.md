@@ -4,6 +4,10 @@ TransAuto
 RSS downloader for Transmission, written in Node.js.
 CHDBits.org only.
 
+## 这是做什么的？
+
+当你在CHD某个种子页面里，点击「RSS下载」后，这个种子就会被自动添加到你服务器上的transmission里了
+
 ## HOW TO USE:
 
 1. Install node, npm. Make sure you have cURL installed.
