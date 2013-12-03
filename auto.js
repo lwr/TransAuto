@@ -1,32 +1,29 @@
-(function() {
-  var Transmission, frequency, http, parseString, rss_url, transmission;
+var Transmission, frequency, http, parseString, rss_url, transmission;
 
-  parseString = require('xml2js').parseString;
+parseString = require('xml2js').parseString;
 
-  Transmission = require('transmission');
+Transmission = require('transmission');
 
-  http = require('http');
-  
-  // 您在chd的rss地址
-  rss_url = "http://chdbits.org/torrentrss.php?myrss=1&linktype=dl&uid=.......";
-  
-  // 填写您的transmission信息
-  transmission = new Transmission({
-    host: 'localhost',
-    port: 9091,
-    username: 'admin',
-    password: '123123'
-  });
-  
-  // 读取rss的间隔，单位：秒
-  frequency = 10;
+http = require('http');
 
-  transmission.on('added', function(hash, id, name) {
-    return console.log('成功添加了种子：', name);
-  });
+rss_url = "http://chdbits.org/torrentrss.php?myrss=1&linktype=dl&uid=.......";
 
-  setInterval(function() {
-    var rss_req;
+transmission = new Transmission({
+  host: 'localhost',
+  port: 9091,
+  username: 'admin',
+  password: '123123'
+});
+
+frequency = 10;
+
+transmission.on('added', function(hash, id, name) {
+  return console.log('成功添加了种子：', name);
+});
+
+setInterval(function() {
+  var e, rss_req;
+  try {
     rss_req = http.request(rss_url, function(res) {
       res.setEncoding('utf8');
       return res.on('data', function(trunk) {
@@ -55,6 +52,7 @@
       return console.log('获取rss时遭遇错误：#{e.message}');
     });
     return rss_req.end();
-  }, frequency * 1000);
-
-}).call(this);
+  } catch (_error) {
+    e = _error;
+  }
+}, frequency * 1000);
