@@ -1,0 +1,9 @@
+{
+    "rss_url" : "http://chdbits.org/torrentrss.php?myrss=1&linktype=dl&uid=...&passkey=...",
+    "transmission" : {
+        "host"     : "localhost",
+        "port"     : 9091,
+        "username" : "admin",
+        "password" : "123123"
+    }
+}
