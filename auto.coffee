@@ -1,16 +1,20 @@
 parseString = require('xml2js').parseString;
 Transmission = require 'transmission'
 http = require 'http'
-# 您在chd的rss地址
-rss_url = "http://chdbits.org/torrentrss.php?myrss=1&linktype=dl&uid=......."
-# 填写您的transmission信息
-transmission = new Transmission
-    host: 'localhost'
-    port: 9091
-    username: 'admin'
-    password: '123123'
+
+fs = require 'fs';
+
+# please copy the 'auto.conf.sample.json' to 'auto.conf.json' and change for your own
+config = JSON.parse(fs.readFileSync("./auto.conf.json"));
+
+# 请在 'auto.conf.json' 中填写你在 chd 的 rss 地址，格式参考 'auto.conf.sample.json'
+rss_url = config.rss_url;
+
+# 请在 'auto.conf.json' 中填写你的 transmission daemon 信息，格式参考 'auto.conf.sample.json'
+transmission = new Transmission(config.transmission);
+
 # 读取rss的间隔，单位：秒
-frequency = 10
+frequency = config.frequency || 10;
 
 transmission.on 'added', (hash, id, name) ->
     console.log '成功添加了种子：', name

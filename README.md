@@ -10,14 +10,15 @@ CHDBits.org only.
 
 ## HOW TO USE:
 
-1. Install node, npm.
+1. Install node, npm, coffee-script (optional).
 2. `npm install transmission xml2js`
-3. Edit auto.coffee/auto.js && Compile coffee it into auto.js 
-4. `coffee auto.coffee` or `node auto.js`
+3. Copy 'auto.conf.sample.json' to 'auto.conf.json' and edit for your own
+4. Compile auto.coffee to auto.js (optional)
+5. `coffee auto.coffee` or `node auto.js`
 
 
 英文不好写着真难受啊啊啊啊啊啊。
-其实就是先装上transmission和xml2js这两个模块，然后编辑一下auto.coffee或者auto.js，填写一下你的RSS地址和transmission的信息，完事儿了直接运行即可。
+其实就是先装上 transmission 和 xml2js 这两个模块，然后创建一个 'auto.conf.json'，填写一下你的 RSS 地址和 transmission daemon 的信息，完事儿了直接运行即可。
 
 暂时应该只支持CHD，因为我只有这个PT站的号...
 不过猜想如果用的都是同一套PT站的程序，应该都通用，比如BYR的
