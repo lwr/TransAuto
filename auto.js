@@ -29,9 +29,9 @@
         res.setEncoding('utf8');
         return res.on('data', function(trunk) {
           return parseString(trunk, function(err, result) {
-            var item, items, torrent, _i, _len, _results;
+            var item, items, torrent, _i, _len, _ref, _ref1, _results;
             if (!err) {
-              items = (((result.rss || {}).channel || [])[0] || {}).item;
+              items = result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? _ref1.item : void 0 : void 0 : void 0;
               if (items) {
                 _results = [];
                 for (_i = 0, _len = items.length; _i < _len; _i++) {
