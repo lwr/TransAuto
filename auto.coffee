@@ -26,7 +26,7 @@ setInterval ->
             res.on 'data', (trunk) ->
                 parseString trunk, (err, result) ->
                     unless err
-                        items = result.rss.channel[0].item
+                        items = (((result.rss || {}).channel ||[])[0] || {}).item
                         if items
                             for item in items
                                 torrent = item.enclosure[0].$.url
