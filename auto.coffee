@@ -27,12 +27,10 @@ setInterval ->
                 try
                     parseString trunk, (err, result) ->
                         unless err
-                            items = result?.rss?.channel?.item
-                            if items
-                                for item in items
-                                    torrent = item.enclosure[0].$.url
-                                    transmission.add torrent, (err, result) ->
-                                        console.log err  if  err
+                            for item in result?.rss?.channel?[0]?.item?
+                                torrent = item.enclosure[0].$.url
+                                transmission.add torrent, (err, result) ->
+                                    console.log err  if  err
 
                 catch e
                     console.log "parse trunk failed: #{trunk}, error=#{e}"

@@ -30,22 +30,20 @@
         return res.on('data', function(trunk) {
           try {
             return parseString(trunk, function(err, result) {
-              var item, items, torrent, _i, _len, _ref, _ref1, _results;
+              var item, torrent, _i, _len, _ref, _ref1, _ref2, _ref3, _results;
               if (!err) {
-                items = result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? _ref1.item : void 0 : void 0 : void 0;
-                if (items) {
-                  _results = [];
-                  for (_i = 0, _len = items.length; _i < _len; _i++) {
-                    item = items[_i];
-                    torrent = item.enclosure[0].$.url;
-                    _results.push(transmission.add(torrent, function(err, result) {
-                      if (err) {
-                        return console.log(err);
-                      }
-                    }));
-                  }
-                  return _results;
+                _ref3 = (result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? (_ref2 = _ref1[0]) != null ? _ref2.item : void 0 : void 0 : void 0 : void 0) != null;
+                _results = [];
+                for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+                  item = _ref3[_i];
+                  torrent = item.enclosure[0].$.url;
+                  _results.push(transmission.add(torrent, function(err, result) {
+                    if (err) {
+                      return console.log(err);
+                    }
+                  }));
                 }
+                return _results;
               }
             });
           } catch (e) {
