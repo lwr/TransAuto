@@ -28,29 +28,33 @@
       rss_req = http.request(rss_url, function(res) {
         res.setEncoding('utf8');
         return res.on('data', function(trunk) {
-          return parseString(trunk, function(err, result) {
-            var item, items, torrent, _i, _len, _results;
-            if (!err) {
-              items = result.rss.channel[0].item;
-              if (items) {
-                _results = [];
-                for (_i = 0, _len = items.length; _i < _len; _i++) {
-                  item = items[_i];
-                  torrent = item.enclosure[0].$.url;
-                  _results.push(transmission.add(torrent, function(err, result) {
-                    if (err) {
-                      return console.log(err);
-                    }
-                  }));
+          try {
+            return parseString(trunk, function(err, result) {
+              var item, items, torrent, _i, _len, _ref, _ref1, _results;
+              if (!err) {
+                items = result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? _ref1.item : void 0 : void 0 : void 0;
+                if (items) {
+                  _results = [];
+                  for (_i = 0, _len = items.length; _i < _len; _i++) {
+                    item = items[_i];
+                    torrent = item.enclosure[0].$.url;
+                    _results.push(transmission.add(torrent, function(err, result) {
+                      if (err) {
+                        return console.log(err);
+                      }
+                    }));
+                  }
+                  return _results;
                 }
-                return _results;
               }
-            }
-          });
+            });
+          } catch (e) {
+            return console.log("parse trunk failed: " + trunk + ", error=" + e);
+          }
         });
       });
       rss_req.on('error', function(e) {
-        return console.log('获取rss时遭遇错误：#{e.message}');
+        return console.log("获取 rss 时遭遇错误：" + e);
       });
       return rss_req.end();
     } catch (e) {
