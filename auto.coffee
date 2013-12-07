@@ -27,7 +27,7 @@ setInterval ->
                 try
                     parseString trunk, (err, result) ->
                         unless err
-                            for item in result?.rss?.channel?[0]?.item?
+                            for item in result?.rss?.channel?[0]?.item || []
                                 torrent = item.enclosure[0].$.url
                                 transmission.add torrent, (err, result) ->
                                     console.log err  if  err
