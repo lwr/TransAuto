@@ -24,45 +24,41 @@
 
   main_proc = function() {
     var rss_req;
-    try {
-      rss_req = http.request(rss_url, function(res) {
-        var data;
-        data = '';
-        res.setEncoding('utf8');
-        res.on('data', function(chunk) {
-          return data += chunk;
-        });
-        return res.on('end', function() {
-          try {
-            return parseString(data, function(err, result) {
-              var item, torrent, _i, _len, _ref, _ref1, _ref2, _ref3, _results;
-              if (!err) {
-                _ref3 = (result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? (_ref2 = _ref1[0]) != null ? _ref2.item : void 0 : void 0 : void 0 : void 0) || [];
-                _results = [];
-                for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
-                  item = _ref3[_i];
-                  torrent = item.enclosure[0].$.url;
-                  _results.push(transmission.add(torrent, function(err, result) {
-                    if (err) {
-                      return console.log(err);
-                    }
-                  }));
-                }
-                return _results;
+    rss_req = http.request(rss_url, function(res) {
+      var data;
+      data = '';
+      res.setEncoding('utf8');
+      res.on('data', function(chunk) {
+        return data += chunk;
+      });
+      return res.on('end', function() {
+        try {
+          return parseString(data, function(err, result) {
+            var item, torrent, _i, _len, _ref, _ref1, _ref2, _ref3, _results;
+            if (!err) {
+              _ref3 = (result != null ? (_ref = result.rss) != null ? (_ref1 = _ref.channel) != null ? (_ref2 = _ref1[0]) != null ? _ref2.item : void 0 : void 0 : void 0 : void 0) || [];
+              _results = [];
+              for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+                item = _ref3[_i];
+                torrent = item.enclosure[0].$.url;
+                _results.push(transmission.add(torrent, function(err, result) {
+                  if (err) {
+                    return console.log(err);
+                  }
+                }));
               }
-            });
-          } catch (e) {
-            return console.log("parse data failed: " + data + ", error=" + e);
-          }
-        });
+              return _results;
+            }
+          });
+        } catch (e) {
+          return console.log("parse data failed: " + data + ", error=" + e);
+        }
       });
-      rss_req.on('error', function(e) {
-        return console.log("获取 rss 时遭遇错误：" + e);
-      });
-      return rss_req.end();
-    } catch (e) {
-
-    }
+    });
+    rss_req.on('error', function(e) {
+      return console.log("获取 rss 时遭遇错误：" + e);
+    });
+    return rss_req.end();
   };
 
   if (process.argv[2] === 'runOnce') {
