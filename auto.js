@@ -13,6 +13,9 @@
     var url = config.rss_url;
     var transmission = new Transmission(config.transmission);
 
+    // 新版的 node-transmission 有点莫名其妙的貌似没有发送所有事件，暂时通过 id 来判断是否新加入
+    var detectDuplicates = {};
+
     function requestRss(once) {
 
         var request = (url.match(/^https:/) ? require('https') : require('http')).request(url, function (res) {
@@ -29,13 +32,14 @@
                     }
 
                     urls.forEach(function (url) {
-                        var title = xpath.select1("../../title/text()", url).nodeValue;
+                        var name = xpath.select1("../../title/text()", url).nodeValue;
                         var torrent = url.value;
-                        transmission.add(torrent, function (err) {
+                        transmission.addUrl(torrent, function (err, result) {
                             if (err) {
-                                console.log("添加种子失败: %s, torrent=%s, error=%s", title, torrent, err.stack || err);
-                            } else {
-                                console.log("添加种子成功: %s, torrent=%s", title, torrent);
+                                console.log("添加种子失败: %s, torrent=%s, error=%s", name, torrent, err.stack || err);
+                            } else if (!detectDuplicates[result.id]) {
+                                detectDuplicates[result.id] = true;
+                                console.log("添加种子成功: ", result);
                             }
                         });
                     });
