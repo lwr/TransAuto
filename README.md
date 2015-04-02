@@ -1,3 +1,4 @@
+
 TransAuto
 =========
 
@@ -10,18 +11,23 @@ CHDBits.org only.
 
 ## HOW TO USE:
 
-1. Install node, npm, coffee-script (optional).
-2. `npm install transmission xml2js`
-3. Copy 'auto.conf.sample.json' to 'auto.conf.json' and edit for your own
-4. Compile auto.coffee to auto.js (optional)
-5. `coffee auto.coffee` or `node auto.js`
+1. `npm install`
+2. Copy 'auto.conf.sample.json' to 'auto.conf.json' and edit for your own
+3. `node auto.js`
+
+-- 此乃既不萌又不帅的中文版分隔线 --
+
+1. `npm install` 安装所有依赖
+2. 创建一个 'auto.conf.json'，填写一下你的 RSS 地址和 transmission daemon 的信息
+3. `node auto.js` 完事儿直接跑就是了
 
 
-英文不好写着真难受啊啊啊啊啊啊。
-其实就是先装上 transmission 和 xml2js 这两个模块，然后创建一个 'auto.conf.json'，填写一下你的 RSS 地址和 transmission daemon 的信息，完事儿了直接运行即可。
+## 测试过的站点列表（待补充）
 
-暂时应该只支持CHD，因为我只有这个PT站的号...
-不过猜想如果用的都是同一套PT站的程序，应该都通用，比如BYR的
+- <http://chdbits.org> - 第一大站 CHD，真不幸，截至当前 (2015-4-2) 仍在关闭中
+- <https://tp.m-team.cc>
+
+一般来说所有支持 RSS 的 PT 站应该都能支持
 
 ## TODO:
 - [x] Make it an infinite loop, so you can use it without crontab.

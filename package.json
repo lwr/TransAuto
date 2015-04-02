@@ -1,0 +1,18 @@
+{
+  "name"         : "transmission-auto",
+  "version"      : "0.0.1",
+  "description"  : "RSS downloader for Transmission",
+  "author"       : "Jeremy <rankjie@gmail.com>",
+  "repository"   : {
+    "type" : "git",
+    "url"  : "https://github.com/rankjie/TransAuto.git"
+  },
+  "bugs"         : {
+    "url" : "https://github.com/rankjie/TransAuto/issues"
+  },
+  "dependencies" : {
+    "transmission" : "~0.4.2",
+    "xmldom"       : "~0.1.19",
+    "xpath"        : "~0.0.9"
+  }
+}
