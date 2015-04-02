@@ -13,11 +13,6 @@
     var url = config.rss_url;
     var transmission = new Transmission(config.transmission);
 
-    transmission.on('added', function (hash, id, name) {
-        console.log('成功添加了种子：', name);
-    });
-
-
     function requestRss(once) {
 
         var request = (url.match(/^https:/) ? require('https') : require('http')).request(url, function (res) {
@@ -39,6 +34,8 @@
                         transmission.add(torrent, function (err) {
                             if (err) {
                                 console.log("添加种子失败: %s, torrent=%s, error=%s", title, torrent, err.stack || err);
+                            } else {
+                                console.log("添加种子成功: %s, torrent=%s", title, torrent);
                             }
                         });
                     });
